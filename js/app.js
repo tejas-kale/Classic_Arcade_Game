@@ -1,37 +1,43 @@
-/*
-	* Constants
-*/
-
 // Define image dimensions
 var IMAGE_WIDTH = 101;
+var IMAGE_HEIGHT = 83;
 
-// Define constants for player position constraints and starting positions
-var PLAYER_START_X = 100;
+// Define constants for position constraints and starting positions
+var PLAYER_START_X = 202;
 var MIN_X = 0;
-var MAX_X = 505;
-var PLAYER_START_Y = 100;
+var ENEMY_MAX_X = 505;
+var PLAYER_MAX_X = 404;
+var PLAYER_START_Y = 404;
 var MIN_Y = 0;
-var MAX_Y = 336;
-
-var WATER_Y = 83;
+var MAX_Y = 404;
 
 
 
-// Enemies our player must avoid
-var Enemy = function(y, speed) {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
+/*
+	* Class that defines an enemy object.
+	*
+	* Consists of object constructor and the following methods:
+	* - update: Modify object position after a input time epoch.
+	* - render: Draw enemy on screen.
+*/
 
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
+
+/* 
+	* Constructor method for enemy object
+	* 
+	* [y] - Row that the enemy will walk on. Valid options are 1, 2, 3.
+	* [speed] - Number specifying how many pixels the enemy will cover per time epoch.
+*/
+var Enemy = function (y, speed) {
+	// Image representing the enemy
     this.sprite = 'images/enemy-bug.png';
 
     // Enemies need to out of the frame to begin with
     this.x = -IMAGE_WIDTH;
 
-    // Each enemy gets its own row with valid y inputs being 1, 2, 3.
-    // Each row is 83 pixels in height
+    // Each enemy gets its own row with valid y inputs being 1, 2, 3
     if (y > 0 && y < 4) {
+    	// Each row is 83 pixels in height
     	// Subtracting 20 pixels from image width to line up every enemy within a row
     	this.y = y * 83 - 20;
     } else {
@@ -39,37 +45,54 @@ var Enemy = function(y, speed) {
     	this.y = 249;
     }
 
-    // TODO: Insert reasonable speed limits to make the game competitive
+    // Enemy speed
     this.speed = speed;
 };
 
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
-Enemy.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
+
+/* 
+	* Update enemy position
+	* 
+	* [dt] - Time delta between ticks.
+*/
+Enemy.prototype.update = function (dt) {
+	// Enemy can only move along X axis and displacement is time x speed
     this.x += dt * this.speed;
 
     // Put the enemy back in the frame from the left when it goes out from the right
-    if (this.x > MAX_X) {
+    if (this.x > ENEMY_MAX_X) {
     	this.x = -IMAGE_WIDTH;
     }
 };
 
-// Draw the enemy on the screen, required method for game
-Enemy.prototype.render = function() {
+
+/*
+	* Draw enemy on screen
+*/
+Enemy.prototype.render = function () {
+	// Place image on canvas
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
-var Player = function() {
-	console.log(this);
-	// TODO: Sprite should be user selected
+
+/*
+	* Class that defines a player object.
+	*
+	* Consists of object constructor and the following methods:
+	* - update: Modify object position on collision with an enemy.
+	* - render: Draw player on screen.
+	* - handleInput: Capture key movements from user and modify player position.
+	* - reset: Take player back to starting position.
+	* - collision: Determine if a player object is intersecting with any of the enemy objects.
+*/
+
+
+/* 
+	* Constructor method for player object
+*/
+var Player = function () {
 	this.sprite = 'images/char-boy.png';
 
 	// Player starts in the centre of middle column
@@ -79,55 +102,79 @@ var Player = function() {
 	this.y = PLAYER_START_Y;
 }
 
-Player.prototype.update = function(newX, newY) {
-	// Bring player to starting position if it has reached water
-	if (newY < WATER_Y) {
-		this.x = PLAYER_START_X;
-		this.y = PLAYER_START_Y;
-	} else {
-		// Ensure that the player is visible
-		if (newX < MIN_X) {
-			this.x = MIN_X;
-		} else if (newX > MAX_X) {
-			this.x = MAX_X;
-		} else {
-			this.x = newX;
-		}
 
-		if (newY > MAX_Y) {
-			this.y = MAX_Y;
-		} else {
-			this.y = newY;
-		}
+Player.prototype.update = function (dt) {
+	if (this.collision() == true) {
+		this.reset(PLAYER_START_X, PLAYER_START_Y);
+
+		// Show toast
+		$(".bitten").fadeIn(400).delay(3000).fadeOut(400)
 	}
+
+	return this;
 }
 
-Player.prototype.render = function() {
+
+Player.prototype.render = function () {
 	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
-Player.prototype.handleInput = function(key) {
-	// Create two variables to hold updates player position
-	var tempX = this.x;
-	var tempY = this.y;
-
+Player.prototype.handleInput = function (key) {
 	// Update player position in temporary variables
-	if (key == 37) {
-		tempX -= 101;
-	} else if (key == 38) {
-		tempY += 83;
-	} else if (key == 39) {
-		tempX += 101;
-	} else if(key == 40) {
-		tempY -= 83;
+	if (key == "left") {
+		this.x -= 101;
+	} else if (key == "up") {
+		this.y -= 83;
+	} else if (key == "right") {
+		this.x += 101;
+	} else if(key == "down") {
+		this.y += 83;
 	}
 
-	// Update player position in its object
-	this.update(tempX, tempY);
+	// Bring player to starting position if it has reached water
+	if (this.y <= MIN_Y) {
+		this.reset(PLAYER_START_X, PLAYER_START_Y);
+	} else {
+		// Ensure that the player is visible
+		if (this.x < MIN_X) {
+			this.reset(MIN_X);
+		} else if (this.x >= PLAYER_MAX_X) {
+			this.reset(PLAYER_MAX_X);
+		}
+
+		if (this.y > MAX_Y) {
+			this.reset(null, MAX_Y);
+		} 
+	}
+
+	return this;
 }
 
+Player.prototype.reset = function (x, y) {
+	if (typeof x != undefined) {
+		this.x = x;
+	}
 
+	if (typeof y != undefined) {
+		this.y = y;
+	}
 
+	return this;
+}
+
+Player.prototype.collision = function () {
+	for (var i = 0; i < allEnemies.length; i++) {
+		if (((this.x > allEnemies[i].x && (allEnemies[i].x + IMAGE_WIDTH) > this.x) || (this.x < allEnemies[i].x && allEnemies[i].x < (this.x + IMAGE_WIDTH))) &&  (allEnemies[i].y + 9 == this.y)) {
+			return true;
+		}
+	}
+}
+
+Player.prototype.change_sprite = function (name) {
+	this.sprite = 'images/' + name + '.png';
+
+	return this;
+}
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
@@ -140,8 +187,6 @@ var allEnemies = [
 	new Enemy(1, 39)
 ];
 var player = new Player();
-
-
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
