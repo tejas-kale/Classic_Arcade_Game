@@ -3,15 +3,15 @@
 */
 
 // Define image dimensions
-var IMAGE_WIDTH = 101;	
+var IMAGE_WIDTH = 101;
 
 // Define constants for player position constraints and starting positions
-var PLAYER_START_X = 202;
-var PLAYER_MIN_X = 0;
-var PLAYER_MAX_X = 404;
-var PLAYER_START_Y = 336;
-var PLAYER_MIN_Y = 0;
-var PLAYER_MAX_Y = 336;
+var PLAYER_START_X = 100;
+var MIN_X = 0;
+var MAX_X = 505;
+var PLAYER_START_Y = 100;
+var MIN_Y = 0;
+var MAX_Y = 336;
 
 var WATER_Y = 83;
 
@@ -32,12 +32,13 @@ var Enemy = function(y, speed) {
     // Each enemy gets its own row with valid y inputs being 1, 2, 3.
     // Each row is 83 pixels in height
     if (y > 0 && y < 4) {
-    	this.y = y * 83; 
+    	// Subtracting 20 pixels from image width to line up every enemy within a row
+    	this.y = y * 83 - 20;
     } else {
     	// If y input is out of range, place the enemy in the last row
     	this.y = 249;
     }
-    
+
     // TODO: Insert reasonable speed limits to make the game competitive
     this.speed = speed;
 };
@@ -49,6 +50,11 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
     this.x += dt * this.speed;
+
+    // Put the enemy back in the frame from the left when it goes out from the right
+    if (this.x > MAX_X) {
+    	this.x = -IMAGE_WIDTH;
+    }
 };
 
 // Draw the enemy on the screen, required method for game
@@ -62,6 +68,7 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 var Player = function() {
+	console.log(this);
 	// TODO: Sprite should be user selected
 	this.sprite = 'images/char-boy.png';
 
@@ -79,16 +86,16 @@ Player.prototype.update = function(newX, newY) {
 		this.y = PLAYER_START_Y;
 	} else {
 		// Ensure that the player is visible
-		if (newX < PLAYER_MIN_X) {
-			this.x = PLAYER_MIN_X;
-		} else if (newX > PLAYER_MAX_X) {
-			this.x = PLAYER_MAX_X;
+		if (newX < MIN_X) {
+			this.x = MIN_X;
+		} else if (newX > MAX_X) {
+			this.x = MAX_X;
 		} else {
 			this.x = newX;
 		}
 
-		if (newY > PLAYER_MAX_Y) {
-			this.y = PLAYER_MAX_Y;
+		if (newY > MAX_Y) {
+			this.y = MAX_Y;
 		} else {
 			this.y = newY;
 		}
