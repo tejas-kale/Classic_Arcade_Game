@@ -11,6 +11,9 @@ var PLAYER_START_Y = 404;
 var MIN_Y = 0;
 var MAX_Y = 404;
 
+// Define task completion count
+var NUM_COMPLETIONS = 0;
+
 
 
 /*
@@ -105,17 +108,25 @@ var Player = function () {
 
 Player.prototype.update = function (dt) {
 	if (this.collision() == true) {
+		// Move player to starting position
 		this.reset(PLAYER_START_X, PLAYER_START_Y);
+
+		// Decrement task completion count by 1
+		NUM_COMPLETIONS = Math.max(NUM_COMPLETIONS - 1, 0)
 
 		// Show toast
 		$(".bitten").fadeIn(400).delay(3000).fadeOut(400)
 	}
+
+	// Show task completion count
+	this.show_count(NUM_COMPLETIONS);
 
 	return this;
 }
 
 
 Player.prototype.render = function () {
+	console.log(ctx);
 	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
@@ -130,10 +141,14 @@ Player.prototype.handleInput = function (key) {
 	} else if(key == "down") {
 		this.y += 83;
 	}
-
+	
 	// Bring player to starting position if it has reached water
 	if (this.y <= MIN_Y) {
 		this.reset(PLAYER_START_X, PLAYER_START_Y);
+
+		// Increment task completion count by 1
+		NUM_COMPLETIONS += 1;
+		this.show_count(NUM_COMPLETIONS);
 	} else {
 		// Ensure that the player is visible
 		if (this.x < MIN_X) {
@@ -143,7 +158,7 @@ Player.prototype.handleInput = function (key) {
 		}
 
 		if (this.y > MAX_Y) {
-			this.reset(null, MAX_Y);
+			this.reset(undefined, MAX_Y);
 		} 
 	}
 
@@ -151,11 +166,11 @@ Player.prototype.handleInput = function (key) {
 }
 
 Player.prototype.reset = function (x, y) {
-	if (typeof x != undefined) {
+	if (x != undefined) {
 		this.x = x;
 	}
 
-	if (typeof y != undefined) {
+	if (y != undefined) {
 		this.y = y;
 	}
 
@@ -175,6 +190,17 @@ Player.prototype.change_sprite = function (name) {
 
 	return this;
 }
+
+Player.prototype.show_count = function (count) {
+	// Set text font and fill properties
+	ctx.font = "24px Impact";
+	ctx.textAlign = "center";
+	ctx.fillStyle = "#FFFFFF";
+
+	// Print count at the top right corner of canvas
+	ctx.fillText("test", 100, 100);
+}
+
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
