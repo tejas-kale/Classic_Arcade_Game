@@ -3,7 +3,7 @@
 ## Instructions
 
 - Download and extract the project ZIP from this page.
-- For Mac and Linux machines, open the Terminal. For Windows, open Cygwin (which can downloaded from [here](http://cygwin.com/install.html})).
+- For Mac and Linux machines, open the Terminal. For Windows, open Cygwin (which can downloaded from [here](http://cygwin.com/install.html)).
 - Navigate to the directory where the project ZIP was extracted.
 - Execute the following line:-
 ```
