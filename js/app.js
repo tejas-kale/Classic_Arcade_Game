@@ -253,11 +253,12 @@ Player.prototype.show_successes = function () {
 
 // Instantiate enemy and player objects
 var allEnemies = [
-	new Enemy(2, 15),
-	new Enemy(1, 70),
-	new Enemy(3, 25),
 	new Enemy(2, 40),
-	new Enemy(1, 39)
+	new Enemy(1, 100),
+	new Enemy(3, 50),
+	new Enemy(2, 65),
+	new Enemy(1, 85),
+	new Enemy(3, 20)
 ];
 var player = new Player();
 
