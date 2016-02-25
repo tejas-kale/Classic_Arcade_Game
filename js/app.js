@@ -26,31 +26,61 @@ var STAR_HEIGHT = 60;
 
 
 /** 
+	* Class that defines a character.
+	* @constructor
+	* @param {int} x - Position along X axis that a character will occupy.
+	* @param {int} y - Position along Y axis that a character will occupy.
+	* @param {string} sprite - Location of the image that will represent a character.
+*/
+var Character = function (x, y, sprite) {
+	// Character's starting X axis position
+	this.x = x;
+
+	// Character's starting Y axis position
+	this.y = y;
+
+	// Image representing the character
+	this.sprite = sprite;
+};
+
+
+/**
+	* Draw character on screen
+*/
+Character.prototype.render = function () {
+	// Place image on canvas
+	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+
+/** 
 	* Class that defines an enemy object.
 	* @constructor
 	* @param {int} y - Row that the enemy will walk on. Valid options are 1, 2, 3.
 	* @param {int} speed - Number specifying how many pixels the enemy will cover per time epoch.
 */
 var Enemy = function (y, speed) {
-	// Image representing the enemy
-    this.sprite = 'images/enemy-bug.png';
-
-    // Enemies need to out of the frame to begin with
-    this.x = -IMAGE_WIDTH;
-
-    // Each enemy gets its own row with valid y inputs being 1, 2, 3
+	// Each enemy gets its own row with valid y inputs being 1, 2, 3
     if (y > 0 && y < 4) {
     	// Each row is 83 pixels in height
     	// Subtracting 20 pixels from image width to line up every enemy within a row
-    	this.y = y * 83 - 20;
+    	y = y * IMAGE_HEIGHT - 20;
     } else {
     	// If y input is out of range, place the enemy in the last row
-    	this.y = 249;
+    	y = IMAGE_HEIGHT * 3;
     }
 
-    // Enemy speed
+    // Create enemy object using character superclass
+    Character.call(this, -IMAGE_WIDTH, y, 'images/enemy-bug.png');
+
+	// Enemy speed
     this.speed = speed;
 };
+
+
+// Delegate failed enemy prototype method lookups to character prototype
+Enemy.prototype = Object.create(Character.prototype);
+Enemy.prototype.constructor = Enemy;
 
 
 /** 
@@ -69,34 +99,22 @@ Enemy.prototype.update = function (dt) {
 };
 
 
-/**
-	* Draw enemy on screen
-*/
-Enemy.prototype.render = function () {
-	// Place image on canvas
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
-
-
-
-
 /** 
 	* Class that defines a player object.
 	* @constructor
 */
 var Player = function () {
-	// Default player image
-	this.sprite = 'images/char-boy.png';
-
-	// Player starts in the centre of middle column
-	this.x = PLAYER_START_X;
-
-	// Player starts in the centre of bottom row
-	this.y = PLAYER_START_Y;
-
+	// Create player object using character superclass
+	Character.call(this, PLAYER_START_X, PLAYER_START_Y, 'images/char-boy.png');
+	
 	// Number of times a player has successfully completed the task
 	this.successes = 0;
-}
+};
+
+
+// Delegate failed enemy prototype method lookups to character prototype
+Player.prototype = Object.create(Character.prototype);
+Player.prototype.constructor = Player;
 
 
 /** 
@@ -104,25 +122,17 @@ var Player = function () {
 */
 Player.prototype.update = function () {
 	// Check if player has collided with any enemy
-	if (this.collision() == true) {
+	if (this.collision() === true) {
 		// Move player to starting position
 		this.reset(PLAYER_START_X, PLAYER_START_Y);
 
 		// Decrement task success count by 1
-		this.successes = Math.max(this.successes - 1, 0)
+		this.successes = Math.max(this.successes - 1, 0);
 
 		// Show toast
-		$(".bitten").fadeIn(400).delay(3000).fadeOut(400)
+		$(".bitten").fadeIn(400).delay(3000).fadeOut(400);
 	}
-}
-
-
-/**
-	* Draw player on screen
-*/
-Player.prototype.render = function () {
-	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
+};
 
 
 /**
@@ -160,7 +170,7 @@ Player.prototype.handle_input = function (key) {
 			this.reset(undefined, MAX_Y);
 		} 
 	}
-}
+};
 
 
 /** 
@@ -171,18 +181,18 @@ Player.prototype.handle_input = function (key) {
 	* @param {int} successes - Number of times a player has successfully completed the tasks.
 */
 Player.prototype.reset = function (x, y, successes) {
-	if (x != undefined) {
+	if (x !== undefined) {
 		this.x = x;
 	}
 
-	if (y != undefined) {
+	if (y !== undefined) {
 		this.y = y;
 	}
 
-	if (successes != undefined) {
+	if (successes !== undefined) {
 		this.successes = successes;
 	}
-}
+};
 
 
 /**
@@ -202,7 +212,7 @@ Player.prototype.collision = function () {
 			return true;
 		}
 	}
-}
+};
 
 
 /**
@@ -212,7 +222,7 @@ Player.prototype.collision = function () {
 */
 Player.prototype.change_sprite = function (name) {
 	this.sprite = 'images/' + name + '.png';
-}
+};
 
 
 /**
@@ -237,18 +247,18 @@ Player.prototype.show_successes = function () {
 
 		// Show congratulatory message and reset player
 		$("#congratulations").modal('show');
-		player.reset(PLAYER_START_X, PLAYER_START_Y, 0)
+		this.reset(PLAYER_START_X, PLAYER_START_Y, 0);
 	} else {
 		// Show success count
 		ctx.fillText(this.successes - (oranges * 5), COUNT_X, COUNT_Y);
-		ctx.strokeText(this.successes - (oranges * 5), COUNT_X, COUNT_Y)
+		ctx.strokeText(this.successes - (oranges * 5), COUNT_X, COUNT_Y);
 
 		// Show orange gems earned
 		for (var i = 1; i <= oranges; i++) {
-			ctx.drawImage(Resources.get('images/gem-orange.png'), STAR_X - (i * 35), STAR_Y, STAR_WIDTH, STAR_HEIGHT)
+			ctx.drawImage(Resources.get('images/gem-orange.png'), STAR_X - (i * 35), STAR_Y, STAR_WIDTH, STAR_HEIGHT);
 		}
 	}	
-}
+};
 
 
 // Instantiate enemy and player objects

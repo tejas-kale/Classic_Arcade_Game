@@ -4,6 +4,50 @@
 		"selected_items":
 		[
 			[
+				"IMAGE",
+				"IMAGE_ADJUSTMENT"
+			],
+			[
+				"PLA",
+				"PLAYER_START_Y"
+			],
+			[
+				"PLAY",
+				"PLAYER_START_X"
+			],
+			[
+				"ST",
+				"STAR_HEIGHT"
+			],
+			[
+				"STAR",
+				"STAR_WIDTH"
+			],
+			[
+				"COUN",
+				"COUNT_X"
+			],
+			[
+				"COUNT",
+				"COUNT_Y"
+			],
+			[
+				"pro",
+				"prototype"
+			],
+			[
+				"g",
+				"global"
+			],
+			[
+				"padding",
+				"padding-left"
+			],
+			[
+				"all",
+				"allEnemies"
+			],
+			[
 				"has",
 				"hash_method"
 			],
@@ -178,10 +222,6 @@
 			[
 				"sectio",
 				"section_title"
-			],
-			[
-				"padding",
-				"padding-bottom"
 			],
 			[
 				"list",
@@ -371,7 +411,56 @@
 			"file": "index.html",
 			"settings":
 			{
-				"buffer_size": 309,
+				"buffer_size": 3377,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "js/options.js",
+			"settings":
+			{
+				"buffer_size": 843,
+				"line_ending": "Windows",
+				"name": "$(document)"
+			}
+		},
+		{
+			"file": "css/style.css",
+			"settings":
+			{
+				"buffer_size": 732,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "js/app.js",
+			"settings":
+			{
+				"buffer_size": 7019,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "README.md",
+			"settings":
+			{
+				"buffer_size": 782,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "js/engine.js",
+			"settings":
+			{
+				"buffer_size": 7755,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "js/resources.js",
+			"settings":
+			{
+				"buffer_size": 3887,
 				"line_ending": "Windows"
 			}
 		}
@@ -421,6 +510,7 @@
 	},
 	"file_history":
 	[
+		"/F/Code/HTML/Udacity_FEWD_P3/css/style.css",
 		"/F/Code/Python/FOBOS/Test_Data/Start_Same/n9.txt",
 		"/F/Code/Python/FOBOS/Test_Data/Start_Same/n10.txt",
 		"/F/Code/Python/FOBOS/Test_Data/Start_Diff/a1.txt",
@@ -547,8 +637,7 @@
 		"/C/Users/tejas.k/OneDrive/Personal/Projects/Pratik_Website/Actual/index.html",
 		"/C/Users/tejas.k/OneDrive/Personal/Documents/CV/LaTeX/CV.tex",
 		"/C/Users/tejas.k/OneDrive/Personal/Documents/CV/LaTeX/CV.tex~",
-		"//CUMUPUNWS41/Users/ruchi.j/Documents/R_packages/RTsample/R/get_unzip_data.R",
-		"//CUMUPUNWS41/Users/ruchi.j/Documents/R_packages/RTsample/DESCRIPTION"
+		"//CUMUPUNWS41/Users/ruchi.j/Documents/R_packages/RTsample/R/get_unzip_data.R"
 	],
 	"find":
 	{
@@ -566,6 +655,10 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"NUM_COMPLETIONS",
+			");\n",
+			"name",
+			">\n",
 			"files_with_sizes",
 			"U",
 			"differ_char",
@@ -616,6 +709,8 @@
 		"regex": true,
 		"replace_history":
 		[
+			"num_completions",
+			"id",
 			"red-text",
 			"red",
 			"green",
@@ -633,7 +728,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 4,
 			"sheets":
 			[
 				{
@@ -642,15 +737,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 309,
+						"buffer_size": 3377,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								3099,
+								3099
 							]
 						],
 						"settings":
@@ -658,10 +753,180 @@
 							"syntax": "Packages/HTML/HTML.sublime-syntax"
 						},
 						"translation.x": 0.0,
+						"translation.y": 1244.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "js/options.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 843,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								15,
+								15
+							]
+						],
+						"settings":
+						{
+							"auto_name": "$(document)",
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "css/style.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 732,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								732,
+								732
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 396.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "js/app.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7019,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6653,
+								6653
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"word_wrap": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 5420.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "README.md",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 782,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								236,
+								236
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/MarkdownEditing/Markdown.tmLanguage"
+						},
+						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "js/engine.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7755,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7482,
+								7482
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 3176.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "js/resources.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3887,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								288,
+								288
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+						},
+						"translation.x": -0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
 					"type": "text"
 				}
 			]
@@ -706,7 +971,7 @@
 	"project": "udacity_fewd_p3.sublime-project",
 	"replace":
 	{
-		"height": 56.0
+		"height": 70.0
 	},
 	"save_all_on_build": true,
 	"select_file":
