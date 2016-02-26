@@ -26,6 +26,12 @@ localhost:8888
 - Earning 3 Orange gems gives a Golden Star.
 - The games ends once a Golden Star is obtained.
 
+## Screenshot
+
+Here is how the game looks:-
+
+![Game screenshot](https://raw.githubusercontent.com/tejas-kale/Classic_Arcade_Game/master/images/screenshot.png)
+
 ## Motivation
 
 This game is intended to help practice and solidify my understanding of Javascript (especially OO JS), jQuery, and HTML 5.
